@@ -5,18 +5,28 @@ import { BrowserView, MobileView } from 'react-device-detect';
 
 //Pages
 import PokemonList from './PokemonList/App';
+import PokemonDetail from './PokemonDetail/App'
 
 
-const App = () => (
+const App = (props) => (
   <ApolloProvider client={client}>
     <BrowserRouter>
       <MobileView>
       <main id='container' style={{background:'whitesmoke', width:'100%', height:'100%'}}>
         <Switch>
-          <Route path="/" exact render={() => <PokemonList />} />
+          <Route path="/" exact render={(props) => <PokemonList {...props}  />} />
+          <Route path="/pokemon-detail" exact render={(props) => <PokemonDetail {...props} />} />
         </Switch>
       </main>
       </MobileView>
+      <BrowserView>
+      <main id='container' style={{background:'whitesmoke', width:'100%', height:'100%'}}>
+        <Switch>
+          <Route path="/" exact render={(props) => <PokemonList {...props} />} />
+          <Route path="/pokemon-detail" exact render={(props) => <PokemonDetail {...props} />} />
+        </Switch>
+      </main>
+      </BrowserView>
     </BrowserRouter>
   </ApolloProvider>
 );
