@@ -35,9 +35,13 @@ const titleCase = (str) => {
 
 const PokemonListMobile = () => {
 
-	const [gqlVariables, setGqlVariables] = useState({limit: 10, offset: 0});
+	const [limit, setLimit] = useState(10);
+	const [offset, setOffset] = useState(0);
 	const { loading, error, data } = useQuery(GET_POKEMONS, {
-    variables: gqlVariables,
+    variables: {
+			limit: limit,
+			offset: offset
+		},
 	});
 	if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -63,7 +67,7 @@ const PokemonListMobile = () => {
 			{pokemons}
 			</div>
 
-			<div className="title-card-m" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => loadMore(gqlVariables)}>
+			<div className="title-card-m" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => loadMore({limit, offset})}>
 				<p className="title" style={{fontSize:16}}>Load More</p>
 			</div>
 			
