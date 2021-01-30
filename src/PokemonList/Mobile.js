@@ -1,7 +1,7 @@
 
-import { jsx } from '@emotion/react'
 import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client';
+import './style.less'
 
 const GET_POKEMONS = gql`
   query pokemons($limit: Int, $offset: Int) {
@@ -12,18 +12,15 @@ const GET_POKEMONS = gql`
       status
       message
       results {
+				id
         url
         name
-        image
+				image
       }
     }
   }
 `;
 
-var gqlVariables = {
-  limit: 12,
-  offset: 0,
-};
 const loadMore = (gqlVariables) => {
 
 }
@@ -38,7 +35,7 @@ const titleCase = (str) => {
 
 const PokemonListMobile = () => {
 
-	// const [gqlVariables, setGqlVariables] = useState({limit: 12, offset: 0});
+	const [gqlVariables, setGqlVariables] = useState({limit: 11, offset: 0});
 	const { loading, error, data } = useQuery(GET_POKEMONS, {
     variables: gqlVariables,
 	});
@@ -49,17 +46,9 @@ const PokemonListMobile = () => {
 	
 	const pokemons = data.pokemons.results.map((pokemon, index) => {
 		return (
-			<div className="box" key={index} css={{width:100, 
-				marginLeft:5,
-				// borderStyle:'solid',
-				// borderWidth: 2,
-				// borderColor:'#ffca38',
-				boxShadow: '0 1px 6px 1px #bababa',
-				borderRadius: 5,
-				marginTop: 5
-				}}>
+			<div className="box" key={index} >
 				<img src={pokemon.image} />
-				<p css={{marginTop:0,
+				<p className="name" style={{marginTop:0,
 					textAlign:'center',
 					fontWeight:'bold'
 					}}>{titleCase(pokemon.name)}</p>
@@ -67,50 +56,16 @@ const PokemonListMobile = () => {
 		)
 	})
   return (
-		<div className="container"  css={{height:'100%', 
-			width:'100%', 
-			padding:10
-			}}>
-			<div css={{borderStyle:'solid', 
-				borderWidth:4, 
-				borderColor:'#ffca38',
-				backgroundColor:'grey', 
-				borderRadius:5, 
-				width:180,
-				marginLeft:'auto', 
-				marginRight:'auto',
-				marginBottom: 10,
-				}}>
-				<p css={{fontSize:36, 
-					fontWeight:'bold', 
-					color:'#ffca38', 
-					textAlign:'center',
-					margin:0
-					}}>Pokédex</p>
+		<div id="container-m">
+			<div className="title-card" >
+				<p  className="title" >Pokédex</p>
 			</div>
-			<div css={{display: 'flex',
-				flexWrap: 'wrap'
-				}}>
+			<div className="box-container" >
 			{pokemons}
 			</div>
 
-			<div css={{borderColor:'#ffca38',
-				backgroundColor:'grey', 
-				borderWidth:1,
-				borderRadius:5, 
-				width:'fit-content',
-				padding:5,
-				marginLeft:'auto', 
-				marginRight:'auto',
-				marginBottom: 10,
-				marginTop: 10
-				}} onClick={() => loadMore(gqlVariables)}>
-				<p css={{fontSize:16, 
-					fontWeight:'bold', 
-					color:'#ffca38', 
-					textAlign:'center',
-					margin:0
-					}}>Load More</p>
+			<div className="title-card" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => loadMore(gqlVariables)}>
+				<p className="title" style={{fontSize:16}}>Load More</p>
 			</div>
 			
 		</div>

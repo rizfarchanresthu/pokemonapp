@@ -11,7 +11,7 @@ const App = () => (
   <ApolloProvider client={client}>
     <BrowserRouter>
       <MobileView>
-      <main id='container' css={{background:'whitesmoke'}}>
+      <main id='container' style={{background:'whitesmoke', width:'100%', height:'100%'}}>
         <Switch>
           <Route path="/" exact render={() => <PokemonList />} />
         </Switch>
