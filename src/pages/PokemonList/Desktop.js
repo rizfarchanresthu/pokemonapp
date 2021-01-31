@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react'
 import { gql, useQuery } from '@apollo/client';
-import { Link } from 'react-router-dom'
 import './style.less'
 
 const GET_POKEMONS = gql`
@@ -33,15 +32,11 @@ const titleCase = (str) => {
 	return splitStr.join(' ');
 }
 
-const PokemonListMobile = () => {
+const PokemonListDesktop = () => {
 
-	const [limit, setLimit] = useState(10);
-	const [offset, setOffset] = useState(0);
+	const [gqlVariables, setGqlVariables] = useState({limit: 20, offset: 0});
 	const { loading, error, data } = useQuery(GET_POKEMONS, {
-    variables: {
-			limit: limit,
-			offset: offset
-		},
+    variables: gqlVariables,
 	});
 	if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -50,24 +45,25 @@ const PokemonListMobile = () => {
 	
 	const pokemons = data.pokemons.results.map((pokemon, index) => {
 		return (
-			<Link to={{pathname: '/pokemon-detail', state:{name: pokemon.name}}} key={index} style={{textDecoration: 'none'}}> 
-				<div className="box-m" >
-					<img src={pokemon.image} />
-					<p className="name">{titleCase(pokemon.name)}</p>
-				</div>
-			</Link>
+			<div className="box" key={index} >
+				<img src={pokemon.image} width={150} />
+				<p className="name" style={{marginTop:0,
+					textAlign:'center',
+					fontWeight:'bold'
+					}}>{titleCase(pokemon.name)}</p>
+			</div>
 		)
 	})
   return (
-		<div id="container-m">
-			<div className="title-card-m" >
+		<div id="container"> 
+			<div className="title-card" >
 				<p  className="title" >Pokédex</p>
 			</div>
-			<div className="box-container-m" >
+			<div className="box-container" >
 			{pokemons}
 			</div>
 
-			<div className="title-card-m" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => loadMore({limit, offset})}>
+			<div className="title-card" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => loadMore(gqlVariables)}>
 				<p className="title" style={{fontSize:16}}>Load More</p>
 			</div>
 			
@@ -75,4 +71,4 @@ const PokemonListMobile = () => {
 	)
 }
 
-export default PokemonListMobile
+export default PokemonListDesktop

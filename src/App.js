@@ -3,38 +3,44 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { BrowserView, MobileView } from 'react-device-detect';
 
+
 //Pages
-import PokemonList from './PokemonList/App';
-import PokemonDetail from './PokemonDetail/App'
+import PokemonList from './pages/PokemonList/App';
+import PokemonDetail from './pages/PokemonDetail/App'
+
+//Function
+import { GlobalProvider } from './context/GlobalState';
+import MyPokemonMobile from './pages/MyPokemon/Mobile';
+import MyPokemonDetailMobile from './pages/MyPokemonDetail/Mobile';
+import StickyBottom from './component/StickyBottom';
+// import StickyTop from './component/StickyTop';
 
 
 const App = (props) => (
-  <ApolloProvider client={client}>
-    <BrowserRouter>
-      <MobileView>
-      <main id='container' style={{background:'whitesmoke', width:'100%', height:'100%'}}>
+  <GlobalProvider>
+
+    <MobileView>
+      {/* <StickyTop /> */}
+      <main id='container-out' style={{background:'white', width:'100%', height:'100%'}}>
         <Switch>
           <Route path="/" exact render={(props) => <PokemonList {...props}  />} />
           <Route path="/pokemon-detail" exact render={(props) => <PokemonDetail {...props} />} />
+          <Route path="/my-pokemon" exact render={(props) => <MyPokemonMobile {...props} />} />
+          <Route path="/my-pokemon-detail" exact render={(props) => <MyPokemonDetailMobile {...props} />} />
         </Switch>
       </main>
-      </MobileView>
-      <BrowserView>
-      <main id='container' style={{background:'whitesmoke', width:'100%', height:'100%'}}>
-        <Switch>
-          <Route path="/" exact render={(props) => <PokemonList {...props} />} />
-          <Route path="/pokemon-detail" exact render={(props) => <PokemonDetail {...props} />} />
-        </Switch>
-      </main>
-      </BrowserView>
-    </BrowserRouter>
-  </ApolloProvider>
+      <StickyBottom />
+    </MobileView>
+    <BrowserView>
+    <main id='container-out' style={{background:'white', width:'100%', height:'100%'}}>
+      <Switch>
+        {/* <Route path="/" exact render={(props) => <PokemonList {...props} />} /> */}
+        {/* <Route path="/pokemon-detail" exact render={(props) => <PokemonDetail {...props} />} /> */}
+      </Switch>
+    </main>
+    </BrowserView>
+  </GlobalProvider>
 );
-
-const client = new ApolloClient({
-  uri: 'https://graphql-pokeapi.vercel.app/api/graphql',
-  cache: new InMemoryCache()
-})
 
 // function App() {
 //   return (
