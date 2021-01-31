@@ -12,7 +12,8 @@ const MyPokemonDetailMobile = (props) => {
   let history = useHistory();
   const { myPokemon, removePokemon, editPokemonName } = useContext(GlobalContext);
   const [isReleased, setIsReleased] = useState(false)
-
+  const [isEdit, setIsEdit] = useState(false)
+  const [nameEdit, setNameEdit] = useState("")
   
   const titleCase = (str) => {
     var splitStr = str.toLowerCase().split(' ');
@@ -32,14 +33,40 @@ const MyPokemonDetailMobile = (props) => {
   // console.log('c', props)
   const pokemonDetail = myPokemon.filter(pokemon => pokemon.id == props.location.state.id)
 
-
   const releasePokemon = (id) => {
     setIsReleased(true)
     removePokemon(id)
     // history.push("/my-pokemon");
   }
 
-  const types = !isReleased ?pokemonDetail[0].types.map((type, index) => {
+  const editName = (pokemon) => {
+    // console.log('b',pokemon, nameEdit)
+    const checkName = myPokemon.map(pokemon => {
+      console.log('a',pokemon.name, nameEdit)
+      if(pokemon.name ===  nameEdit){
+        return true
+      }  else {
+        return false
+      }
+    })
+    console.log(checkName[0])
+    if(checkName.includes(true)){
+      alert("Name has already been used")
+    }else {
+      const updatedPokemon ={
+        id: pokemon.id,
+        name: nameEdit,
+        types: pokemon.types,
+        moves: pokemon.moves,
+        sprites: pokemon.sprites
+      }
+      setIsEdit(prevIsEdit => !prevIsEdit)
+      editPokemonName(updatedPokemon)
+    }
+    
+  }
+
+  const types = !isReleased ? pokemonDetail[0].types.map((type, index) => {
     return(
       <div className={`container-type ${type.type.name}`} key={index}>
         <p className="type-name">{titleCase(type.type.name)}</p>
@@ -81,7 +108,23 @@ const MyPokemonDetailMobile = (props) => {
           <div className="container-head">
             <img className="image" src={pokemonDetail[0].sprites.front_default} />
             <div className="box-name">
-              <p className="name">{titleCase(pokemonDetail[0].name)}</p>
+              {!isEdit ? <p className="name">{titleCase(pokemonDetail[0].name)}</p> : 
+              // <form onSubmit={()=> editName(pokemonDetail[0])}>
+              <input 
+                className="form-input-name"
+                type="text"
+                placeholder="Enter Nickname"
+                value={nameEdit}
+                onChange={e => setNameEdit(titleCase(e.target.value))} 
+                onBlur={()=> editName(pokemonDetail[0])}
+              />
+
+              // </form>
+             }
+              
+            </div>
+            <div onClick={()=> setIsEdit(prevIsEdit => !prevIsEdit)}>
+              Edit
             </div>
             <div onClick={()=> releasePokemon(pokemonDetail[0].id)}>
               <p>Release</p>

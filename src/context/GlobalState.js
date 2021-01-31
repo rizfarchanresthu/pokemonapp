@@ -25,7 +25,6 @@ export const GlobalProvider = ({ children }) => {
             payload: id
         });
         const newPokemonList = state.myPokemon.filter(pokemon => pokemon.id !== id)
-        console.log(newPokemonList)
         setMyPokemon([...newPokemonList])
     };
 
@@ -37,18 +36,29 @@ export const GlobalProvider = ({ children }) => {
         setMyPokemon([...state.myPokemon, pokemon])
     };
 
-    function editPokemon(id) {
+    function editPokemonName(pokemon) {
+        
         dispatch({
             type: 'EDIT_POKEMON_NAME',
-            payload: id
+            payload: pokemon
         });
+        const updatedPokemon = pokemon
+        const updatedMyPokemon = state.myPokemon.map(pokemon => {
+            if (pokemon.id === updatedPokemon.id) {
+                return updatedPokemon;
+            }
+            return pokemon;
+        });
+        // console.log('a',updatedPokemon, updatedMyPokemon)
+
+        setMyPokemon(updatedMyPokemon)
     };
 
     return (<GlobalContext.Provider value={{
         myPokemon: state.myPokemon,
         removePokemon,
         addPokemon,
-        editPokemon
+        editPokemonName
     }}>
         {children}
     </GlobalContext.Provider>);

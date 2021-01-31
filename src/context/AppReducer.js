@@ -11,19 +11,19 @@ export default (state, action) => {
                 myPokemon: [...state.myPokemon, action.payload]
             };
         case 'EDIT_POKEMON_NAME':
-            // const updatedEmployee = action.payload;
+            const updatedPokemon = action.payload;
 
-            // const updatedEmployees = state.employees.map(employee => {
-            //     if (employee.id === updatedEmployee.id) {
-            //         return updatedEmployee;
-            //     }
-            //     return employee;
-            // });
+            const updatedMyPokemon = state.myPokemon.map(pokemon => {
+                if (pokemon.id === updatedPokemon.id) {
+                    return updatedPokemon;
+                }
+                return pokemon;
+            });
 
-            // return {
-            //     ...state,
-            //     employees: updatedEmployees
-            // };
+            return {
+                ...state,
+                myPokemon: updatedMyPokemon
+            };
         default: return state;
     }
 }

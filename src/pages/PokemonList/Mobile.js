@@ -37,8 +37,6 @@ const PokemonListMobile = () => {
   );
 
   const pokemonList =  data.pokemons.results
-
-  console.log('a', Object.keys(myPokemon.filter(obj => obj.name == 'bulbasaur')).length)
   
   const pokemons = pokemonList.map((pokemon, index) => {
 		return (
@@ -62,9 +60,11 @@ const PokemonListMobile = () => {
       <div className="box-container-m" >
         {pokemons}
       </div>
-      <div className="title-card-m" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5, marginBottom:75}} onClick={() => loadMore()}>
+      <div className="title-card-m" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => loadMore()}>
         <p className="title" style={{fontSize:16}}>Load More</p>
       </div>
+      <div style={{fontSize:8}}>Pokeball icon made from <a href="http://www.onlinewebfonts.com/icon">Icon Fonts</a> is licensed by CC BY 3.0</div>
+      <div style={{fontSize:8,marginBottom: 90}}>Pokedex icon from <a href="https://www.visualpharm.com/free-icons/pokedex-595b40b65ba036ed117d221c">VisualPharm</a></div>
     </div>
 	)
 }
