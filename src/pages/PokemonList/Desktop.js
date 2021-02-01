@@ -39,10 +39,8 @@ const PokemonListDesktop = () => {
     variables: gqlVariables,
 	});
 	if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+  	if (error) return `Error! ${error.message}`;
 
-	console.log('Response from server', data);
-	
 	const pokemons = data.pokemons.results.map((pokemon, index) => {
 		return (
 			<div className="box" key={index} >

@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom'
 import usePokemonDetailHooks from '../../hooks/usePokemonDetailHooks'
 import './style.less' 
 import { GlobalContext } from '../../context/GlobalState';
+import { titleCase, titleCaseDash } from '../../component/titleCase'
 
 
 
@@ -19,22 +20,6 @@ const PokemonDetailMobile = (props) => {
   </div>
   );
   if (error) return `Error! ${error.message}`;
-  
-  const titleCase = (str) => {
-    var splitStr = str.toLowerCase().split(' ');
-    for (var i = 0; i < splitStr.length; i++) {
-      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-    }
-    return splitStr.join(' ');
-  }
-
-  const titleCaseDash = (str) => {
-    var splitStr = str.toLowerCase().split('-');
-    for (var i = 0; i < splitStr.length; i++) {
-      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-    }
-    return splitStr.join(' ');
-  }
   
   const pokemonDetail = data.pokemon
 
@@ -57,7 +42,6 @@ const PokemonDetailMobile = (props) => {
   }
 
   const next = () => {
-    // console.log(myPokemon.length == 0 ? 1 : Number(myPokemon[myPokemon.length-1].id))
     history.push({pathname: '/my-pokemon-detail',
     state: { id: Number(myPokemon[myPokemon.length-1].id)}})
   }
@@ -84,6 +68,7 @@ const PokemonDetailMobile = (props) => {
             <div onClick={() => history.goBack()}>
               <img className="back-btn"  
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAATUlEQVRIie3MOxEAIBAD0RSU+KNEAlIQggyEwTF8DOQaZrLbP0Cdiu3CDJumNrNOPkxHFCNGDM0A9UENgYFEiRJFUpmDLlVZZlMuzFdNO/WPEVqT7vQAAAAASUVORK5CYII="
+              alt="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAATUlEQVRIie3MOxEAIBAD0RSU+KNEAlIQggyEwTF8DOQaZrLbP0Cdiu3CDJumNrNOPkxHFCNGDM0A9UENgYFEiRJFUpmDLlVZZlMuzFdNO/WPEVqT7vQAAAAASUVORK5CYII="
               />
             </div>
           <div>
@@ -92,7 +77,7 @@ const PokemonDetailMobile = (props) => {
         </div>
         <div id="container-m">
           <div className="container-head">
-            <img className="image" src={pokemonDetail.sprites.front_default} />
+            <img className="image" src={pokemonDetail.sprites.front_default} alt={pokemonDetail.sprites.front_default} />
             <div className="box-name">
               <p className="name">{titleCase(pokemonDetail.name)}</p>
             </div>

@@ -15,7 +15,6 @@ export const GlobalProvider = ({ children }) => {
     const initialState = {
         myPokemon: myPokemon
     }
-    // console.log('a',myPokemon, initialState)
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
 
@@ -49,7 +48,6 @@ export const GlobalProvider = ({ children }) => {
             }
             return pokemon;
         });
-        // console.log('a',updatedPokemon, updatedMyPokemon)
 
         setMyPokemon(updatedMyPokemon)
     };

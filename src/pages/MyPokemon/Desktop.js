@@ -40,13 +40,11 @@ const PokemonListDesktop = () => {
 	});
 	if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
-
-	console.log('Response from server', data);
 	
 	const pokemons = data.pokemons.results.map((pokemon, index) => {
 		return (
 			<div className="box" key={index} >
-				<img src={pokemon.image} width={150} />
+				<img src={pokemon.image} alt={pokemon.image} width={150} />
 				<p className="name" style={{marginTop:0,
 					textAlign:'center',
 					fontWeight:'bold'
