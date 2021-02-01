@@ -39,7 +39,7 @@ const MyPokemonMobile = () => {
 			
 		)
 	}) : <div>
-		There are no Pokemon you have caught
+		<p>There are no Pokemon you have caught</p>
 	</div>
 	if(!isReleased){
 		return(

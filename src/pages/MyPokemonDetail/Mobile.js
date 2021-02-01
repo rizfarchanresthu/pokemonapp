@@ -42,7 +42,7 @@ const MyPokemonDetailMobile = (props) => {
   const editName = (pokemon) => {
     // console.log('b',pokemon, nameEdit)
     const checkName = myPokemon.map(pokemon => {
-      console.log('a',pokemon.name, nameEdit)
+      // console.log('a',pokemon.name, nameEdit)
       if(pokemon.name ===  nameEdit){
         return true
       }  else {
@@ -55,6 +55,7 @@ const MyPokemonDetailMobile = (props) => {
     }else {
       const updatedPokemon ={
         id: pokemon.id,
+        pokedex: pokemon.pokedex,
         name: nameEdit,
         types: pokemon.types,
         moves: pokemon.moves,

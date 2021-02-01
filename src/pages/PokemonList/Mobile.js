@@ -45,7 +45,7 @@ const PokemonListMobile = () => {
 					<img src={pokemon.image} />
 					<p className="name">{titleCase(pokemon.name)}</p>
           <div className="box-owned">
-            <p className="owned-text">Owned: {Object.keys(myPokemon.filter(obj => obj.name == pokemon.name)).length}</p>
+            <p className="owned-text">Owned: {Object.keys(myPokemon.filter(obj => obj.pokedex == pokemon.id)).length}</p>
           </div>
 				</div>
 			</Link>

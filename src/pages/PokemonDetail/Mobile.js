@@ -40,6 +40,7 @@ const PokemonDetailMobile = (props) => {
     // console.log(pokemon)
     let pokemonCaught = {
       id: myPokemon.length == 0 ? 1 : Number(myPokemon[myPokemon.length-1].id) + 1,
+      pokedex: pokemon.id,
       name: pokemon.name,
       sprites: pokemon.sprites,
       types:pokemon.types,
