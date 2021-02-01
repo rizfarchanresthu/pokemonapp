@@ -3,12 +3,13 @@ import React, { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import usePokemonDetailHooks from '../../hooks/usePokemonDetailHooks'
 import './style.less' 
-import { GlobalContext } from '../../context/GlobalState';
+import { GlobalContext } from '../../context/GlobalState'
 import { titleCase, titleCaseDash } from '../../component/titleCase'
 
 
 
-const PokemonDetailMobile = (props) => {
+const PokemonDetailDesktop = (props) => {
+    console.log(props)
   let history = useHistory();
   const { myPokemon, addPokemon, removePokemon, editPokemonName } = useContext(GlobalContext);
   const [name, setName] = useState(props.location.state.name);
@@ -64,18 +65,7 @@ const PokemonDetailMobile = (props) => {
   if(isCaught == 'none'){
     return (
       <React.Fragment>
-        <div id="header">
-            <div onClick={() => history.goBack()}>
-              <img className="back-btn"  
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAATUlEQVRIie3MOxEAIBAD0RSU+KNEAlIQggyEwTF8DOQaZrLbP0Cdiu3CDJumNrNOPkxHFCNGDM0A9UENgYFEiRJFUpmDLlVZZlMuzFdNO/WPEVqT7vQAAAAASUVORK5CYII="
-              alt="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAATUlEQVRIie3MOxEAIBAD0RSU+KNEAlIQggyEwTF8DOQaZrLbP0Cdiu3CDJumNrNOPkxHFCNGDM0A9UENgYFEiRJFUpmDLlVZZlMuzFdNO/WPEVqT7vQAAAAASUVORK5CYII="
-              />
-            </div>
-          <div>
-            <p>Pokémon Detail</p>
-          </div>
-        </div>
-        <div id="container-m">
+        <div id="container" style={{display: 'flex', flexDirection:'row-reverse', marginTop:100}}>
           <div className="container-head">
             <img className="image" src={pokemonDetail.sprites.front_default} alt={pokemonDetail.sprites.front_default} />
             <div className="box-name">
@@ -102,7 +92,7 @@ const PokemonDetailMobile = (props) => {
     )
   } else if (isCaught == 'flee'){
     return (
-      <div id="container-m">
+      <div id="container">
         <div className="catch-result">
           <p>Failed to catch</p>
           <div className="catch-result-button failed" onClick={() => setIsCaught('none')}>
@@ -113,7 +103,7 @@ const PokemonDetailMobile = (props) => {
     )
   } else {
     return (
-      <div id="container-m">
+      <div id="container">
         <div className="catch-result">
           <p>Caught!</p>
           <div className="catch-result-button success" onClick={() => next(pokemonDetail)}>
@@ -126,4 +116,4 @@ const PokemonDetailMobile = (props) => {
   
 }
 
-export default PokemonDetailMobile
+export default PokemonDetailDesktop

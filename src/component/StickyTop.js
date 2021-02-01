@@ -3,26 +3,37 @@ import { NavLink, useHistory } from 'react-router-dom';
 
 const StickyTop = () => {
     const history = useHistory()
-    const acceptedRoutes = ["/pokemon-detail"];
-    const isVisible = acceptedRoutes.includes(window.location.pathname);
-    if(isVisible){
-        return (
-            <div id="header">
-              <div onClick={() => history.goBack()}>
-                <img className="back-btn" 
-                alt="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAATUlEQVRIie3MOxEAIBAD0RSU+KNEAlIQggyEwTF8DOQaZrLbP0Cdiu3CDJumNrNOPkxHFCNGDM0A9UENgYFEiRJFUpmDLlVZZlMuzFdNO/WPEVqT7vQAAAAASUVORK5CYII="
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAATUlEQVRIie3MOxEAIBAD0RSU+KNEAlIQggyEwTF8DOQaZrLbP0Cdiu3CDJumNrNOPkxHFCNGDM0A9UENgYFEiRJFUpmDLlVZZlMuzFdNO/WPEVqT7vQAAAAASUVORK5CYII="
-                />
-              </div>
-            <div>
-              <p>Pokémon Detail</p>
+
+    return (
+      <div id="sticky-top">
+        <nav>
+          <div className="sticky-container">
+            <div className="title-card" >
+              <p  className="title" >Pokédex</p>
             </div>
+            <div className="right-container">
+              <div className="navbar-container">
+                <NavLink className="nav-link" exact activeClassName="nav-link-active" to='/'>
+                  <div className="img-logo">
+                    <img src="https://visualpharm.com/assets/806/Pokedex-595b40b65ba036ed117d221c.svg" width="50" alt="https://imgur.com/nJrgSrv.png"/>
+                    <p className="text-logo">Pokedex</p>
+                  </div>
+                </NavLink>
+              </div>
+              <div className="navbar-container">
+                <NavLink className="nav-link" exact activeClassName="nav-link-active" to='/my-pokemon'>
+                  <div className="img-logo">
+                    <img src="https://imgur.com/nJrgSrv.png" width="50" alt="https://imgur.com/nJrgSrv.png"/>
+                    <p className="text-logo">My Pokemon List</p>
+                  </div>
+                </NavLink>
+              </div>
+            </div>
+            
           </div>
-        )
-    } else {
-        return <div id="header" style={{display: "none"}}></div>
-    }
-	
+        </nav>
+      </div>
+    )	
 }
 
 StickyTop.propTypes = {};

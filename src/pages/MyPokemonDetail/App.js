@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
 import MyPokemonDetailMobile from './Mobile'
-// import PokemonDetailDesktop from './Desktop'
+import MyPokemonDetailDesktop from './Desktop'
 
 const MyPokemonDetail = (props) => {
     const isDesktopOrLaptop = useMediaQuery({ query: '(min-device-width: 1224px)' })
@@ -9,10 +9,10 @@ const MyPokemonDetail = (props) => {
 
     return (
         <div>
-             {/* {isDesktopOrLaptop && <PokemonDetailDesktop />} */}
+            {isDesktopOrLaptop && <MyPokemonDetailDesktop {...props} />}
             {isTabletOrMobileDevice && <MyPokemonDetailMobile {...props} />}
         </div>
     )
 }
 
-export default PokemonDetail
+export default MyPokemonDetail

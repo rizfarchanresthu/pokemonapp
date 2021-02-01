@@ -1,72 +1,60 @@
+import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { GlobalContext } from '../../context/GlobalState';
+import { titleCase } from '../../component/titleCase'
 
-import React, { useState } from 'react'
-import { gql, useQuery } from '@apollo/client';
-import './style.less'
+const MyPokemonDesktop = () => {
 
-const GET_POKEMONS = gql`
-  query pokemons($limit: Int, $offset: Int) {
-    pokemons(limit: $limit, offset: $offset) {
-      count
-      next
-      previous
-      status
-      message
-      results {
-        url
-        name
-				image
-      }
-    }
-  }
-`;
-
-const loadMore = (gqlVariables) => {
-
-}
-
-const titleCase = (str) => {
-	var splitStr = str.toLowerCase().split(' ');
-	for (var i = 0; i < splitStr.length; i++) {
-		splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-	}
-	return splitStr.join(' ');
-}
-
-const PokemonListDesktop = () => {
-
-	const [gqlVariables, setGqlVariables] = useState({limit: 20, offset: 0});
-	const { loading, error, data } = useQuery(GET_POKEMONS, {
-    variables: gqlVariables,
-	});
-	if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+	const [isReleased, setIsReleased] = useState(false)
+	const { myPokemon, removePokemon } = useContext(GlobalContext);
 	
-	const pokemons = data.pokemons.results.map((pokemon, index) => {
+
+	const releasePokemon = (id) => {
+		setIsReleased(true)
+    removePokemon(id)
+	}
+  const pokemons = myPokemon.length > 0 ?myPokemon.map((pokemon, index) => {
 		return (
-			<div className="box" key={index} >
-				<img src={pokemon.image} alt={pokemon.image} width={150} />
-				<p className="name" style={{marginTop:0,
-					textAlign:'center',
-					fontWeight:'bold'
-					}}>{titleCase(pokemon.name)}</p>
+				<div className="box" key={index} >
+					<Link to={{pathname: '/my-pokemon-detail', state:{id: pokemon.id}}}  style={{textDecoration: 'none'}}> 
+						<img src={pokemon.sprites.front_default} alt={pokemon.sprites.front_default} width="150"/>
+						<p className="name">{titleCase(pokemon.name)}</p>
+					</Link>
+					<div className="box-owned" style={{zIndex: 1031}} onClick={()=> releasePokemon(pokemon.id)}>
+						<p className="owned-text">Release</p>
+					</div>
+				</div>
+				
+
+		)
+	}) : <div>
+		<p>There are no Pokemon you have caught</p>
+	</div>
+	if(!isReleased){
+		return(
+			<div id="container" style={{marginTop: 50}}>
+				<div className="title-card" style={{width:250}}>
+					<p  className="title" >My Pokémon</p>
+				</div>
+				<div className="box-container" >
+					{pokemons}
+				</div>
 			</div>
 		)
-	})
-  return (
-		<div id="container"> 
-			<div className="title-card" >
-				<p  className="title" >Pokédex</p>
+	}
+	else {
+		return(
+			<div id="container-m">
+				<div className="catch-result">
+				<p>Your Pokémon is released</p>
+				<div className="catch-result-button release" onClick={() => setIsReleased(false)}>
+					continue
+				</div>
+				</div>
 			</div>
-			<div className="box-container" >
-			{pokemons}
-			</div>
-
-			<div className="title-card" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => loadMore(gqlVariables)}>
-				<p className="title" style={{fontSize:16}}>Load More</p>
-			</div>
-			
-		</div>
-	)
+    	)
+	}
+	
 }
 
-export default PokemonListDesktop
+export default MyPokemonDesktop
