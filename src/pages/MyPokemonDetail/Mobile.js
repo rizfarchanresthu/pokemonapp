@@ -6,7 +6,6 @@ import './style.less'
 import { GlobalContext } from '../../context/GlobalState';
 
 
-
 const MyPokemonDetailMobile = (props) => {
   // console.log(props)
   let history = useHistory();
@@ -31,7 +30,7 @@ const MyPokemonDetailMobile = (props) => {
     return splitStr.join(' ');
   }
   // console.log('c', props)
-  const pokemonDetail = myPokemon.filter(pokemon => pokemon.id == props.location.state.id)
+  const pokemonDetail = myPokemon.filter(pokemon => pokemon.id == props.location.state.id) || null
 
   const releasePokemon = (id) => {
     setIsReleased(true)
@@ -41,12 +40,14 @@ const MyPokemonDetailMobile = (props) => {
 
   const editName = (pokemon) => {
     // console.log('b',pokemon, nameEdit)
-    const checkName = myPokemon.map(pokemon => {
+    const checkName = myPokemon.map(listPokemon => {
       // console.log('a',pokemon.name, nameEdit)
-      if(pokemon.name ===  nameEdit){
-        return true
-      }  else {
-        return false
+      if(listPokemon.id !== pokemon.id){
+        if(titleCase(pokemon.name) ===  nameEdit){
+          return true
+        }  else {
+          return false
+        }
       }
     })
     console.log(checkName[0])
@@ -67,28 +68,30 @@ const MyPokemonDetailMobile = (props) => {
     
   }
 
-  const types = !isReleased ? pokemonDetail[0].types.map((type, index) => {
+  const types = !isReleased ? pokemonDetail ? pokemonDetail[0].types.map((type, index) => {
     return(
       <div className={`container-type ${type.type.name}`} key={index}>
         <p className="type-name">{titleCase(type.type.name)}</p>
       </div>
     )
-  }) : null
+  }) : null : null
 
-  const moves = !isReleased ? pokemonDetail[0].moves.map((move, index) => {
+  const moves = !isReleased ? pokemonDetail ? pokemonDetail[0].moves.map((move, index) => {
     return(
       <div className="container-move" key={index}>
         <p className="move-name">{titleCaseDash(move.move.name)}</p>
       </div>
     )
-  }) :null
+  }) :null :null
 
   if(isReleased) {
     return(
-      <div>
-        Your Pokémon is released
-        <div onClick={() => history.push('/my-pokemon')}>
-          continue
+      <div id="container-m">
+        <div className="catch-result" >
+          <p>Your Pokémon is released</p>
+          <div className="catch-result-button release" onClick={() => history.push('/my-pokemon')}>
+            continue
+          </div>
         </div>
       </div>
     )
@@ -108,27 +111,30 @@ const MyPokemonDetailMobile = (props) => {
         <div id="container-m">
           <div className="container-head">
             <img className="image" src={pokemonDetail[0].sprites.front_default} />
-            <div className="box-name">
-              {!isEdit ? <p className="name">{titleCase(pokemonDetail[0].name)}</p> : 
-              // <form onSubmit={()=> editName(pokemonDetail[0])}>
-              <input 
-                className="form-input-name"
-                type="text"
-                placeholder="Enter Nickname"
-                value={nameEdit}
-                onChange={e => setNameEdit(titleCase(e.target.value))} 
-                onBlur={()=> editName(pokemonDetail[0])}
-              />
+            <div style={{display: 'flex'}}>
+              <div className="box-name">
+                {!isEdit ? <p className="name">{titleCase(pokemonDetail[0].name)}</p> : 
+                // <form onSubmit={()=> editName(pokemonDetail[0])}>
+                <input 
+                  className="form-input-name"
+                  type="text"
+                  placeholder="Enter Nickname"
+                  value={nameEdit}
+                  defaultValue={pokemonDetail[0].name}
+                  onChange={e => setNameEdit(titleCase(e.target.value))} 
+                  onBlur={()=> editName(pokemonDetail[0])}
+                />
 
-              // </form>
-             }
-              
+                // </form>
+              }
+                
+              </div>
+              <div className="edit-button" onClick={()=> setIsEdit(prevIsEdit => !prevIsEdit)}>
+                <img src="https://imgur.com/9jznV3l.png" style={{width:50}} />
+              </div>
             </div>
-            <div onClick={()=> setIsEdit(prevIsEdit => !prevIsEdit)}>
-              Edit
-            </div>
-            <div onClick={()=> releasePokemon(pokemonDetail[0].id)}>
-              <p>Release</p>
+            <div className="catch-button" onClick={()=> releasePokemon(pokemonDetail[0].id)}>
+              <p className="catch-text">Release</p>
             </div>
             <div className="box-type">
               {types}

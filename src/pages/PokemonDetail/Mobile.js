@@ -13,10 +13,12 @@ const PokemonDetailMobile = (props) => {
   const [name, setName] = useState(props.location.state.name);
   const [isCaught, setIsCaught] = useState("none")
 	const { loading, error, data } = usePokemonDetailHooks(name)
-	if (loading) return 'Loading...';
+	if (loading) return (
+  <div className="img-loading">
+    <img width="80" src="https://imgur.com/nJrgSrv.png" alt="https://imgur.com/nJrgSrv.png" />
+  </div>
+  );
   if (error) return `Error! ${error.message}`;
-
-  console.log('Response from server', data);
   
   const titleCase = (str) => {
     var splitStr = str.toLowerCase().split(' ');
@@ -37,7 +39,6 @@ const PokemonDetailMobile = (props) => {
   const pokemonDetail = data.pokemon
 
   const catchPokemon = (pokemon) => {
-    // console.log(pokemon)
     let pokemonCaught = {
       id: myPokemon.length == 0 ? 1 : Number(myPokemon[myPokemon.length-1].id) + 1,
       pokedex: pokemon.id,
@@ -50,8 +51,6 @@ const PokemonDetailMobile = (props) => {
     if(math%2 == 0){
       setIsCaught("caught")
       addPokemon(pokemonCaught)
-      // console.log(myPokemon)
-      // history.push("/my-pokemon");
     }else {
       setIsCaught("flee")
     }
@@ -100,8 +99,8 @@ const PokemonDetailMobile = (props) => {
             {/* {isCaught ? <div onClick={()=> releasePokemon(pokemonDetail.id)}>
               Remove
               </div> : null} */}
-            <div onClick={()=> catchPokemon(pokemonDetail)}>
-              <p>Catch</p>
+            <div className="catch-button" onClick={()=> catchPokemon(pokemonDetail)}>
+              <p className="catch-text">Catch</p>
             </div>
             <div className="box-type">
               {types}
@@ -119,18 +118,22 @@ const PokemonDetailMobile = (props) => {
   } else if (isCaught == 'flee'){
     return (
       <div id="container-m">
-        <p>Failed to catch</p>
-        <div onClick={() => setIsCaught('none')}>
-          return 
+        <div className="catch-result">
+          <p>Failed to catch</p>
+          <div className="catch-result-button failed" onClick={() => setIsCaught('none')}>
+            return 
+          </div>
         </div>
       </div>
     )
   } else {
     return (
       <div id="container-m">
-        <p>Caught!</p>
-        <div onClick={() => next(pokemonDetail)}>
-          continue 
+        <div className="catch-result">
+          <p>Caught!</p>
+          <div className="catch-result-button success" onClick={() => next(pokemonDetail)}>
+            continue 
+          </div>
         </div>
       </div>
     )

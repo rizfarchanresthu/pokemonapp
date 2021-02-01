@@ -55,13 +55,15 @@ const MyPokemonMobile = () => {
 	}
 	else {
 		return(
-      <div>
-        Your Pokémon is released
-        <div onClick={() => setIsReleased(false)}>
-          continue
-        </div>
-      </div>
-    )
+			<div id="container-m">
+				<div className="catch-result">
+				<p>Your Pokémon is released</p>
+				<div className="catch-result-button release" onClick={() => setIsReleased(false)}>
+					continue
+				</div>
+				</div>
+			</div>
+    	)
 	}
 	
 }

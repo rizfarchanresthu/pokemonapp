@@ -28,12 +28,12 @@ const PokemonListMobile = () => {
 
   const loadMore = () => {
     setLimit(prevLimit => prevLimit+10)
-    // setOffset(prevOffset => prevOffset+limit)
-    // fetchMore();
   }
 
   if (loading) return (
-    'LOADING'
+    <div className="img-loading">
+      <img width="80" src="https://imgur.com/nJrgSrv.png" alt="https://imgur.com/nJrgSrv.png" />
+    </div>
   );
 
   const pokemonList =  data.pokemons.results
@@ -42,7 +42,7 @@ const PokemonListMobile = () => {
 		return (
 			<Link to={{pathname: '/pokemon-detail', state:{name: pokemon.name}}} key={index} className="link"> 
 				<div className="box-m" >
-					<img src={pokemon.image} />
+					<img src={pokemon.image} alt={pokemon.image} />
 					<p className="name">{titleCase(pokemon.name)}</p>
           <div className="box-owned">
             <p className="owned-text">Owned: {Object.keys(myPokemon.filter(obj => obj.pokedex == pokemon.id)).length}</p>
