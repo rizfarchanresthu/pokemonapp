@@ -28,7 +28,7 @@ const MyPokemonDesktop = () => {
 
 		)
 	}) : <div>
-		<p>There are no Pokemon you have caught</p>
+		<p>There are no Pokémon you have caught</p>
 	</div>
 	if(!isReleased){
 		return(

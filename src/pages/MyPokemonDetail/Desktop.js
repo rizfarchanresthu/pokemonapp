@@ -12,7 +12,6 @@ const MyPokemonDetailDesktop = (props) => {
   const [isEdit, setIsEdit] = useState(false)
   const [nameEdit, setNameEdit] = useState("")
   
-  // console.log(props.location.state.id, myPokemon.filter(pokemon => pokemon.id == props.location.state.id))
   const pokemonDetail = myPokemon.filter(pokemon => pokemon.id == props.location.state.id);
   
 
