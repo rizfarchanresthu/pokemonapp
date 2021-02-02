@@ -190,7 +190,6 @@ p{
             display: flex;
             flex-direction: row;
             justify-content: space-evenly;
-            padding: 10px 0px 10px 0px;
             .navbar-container{
                 display: flex;
                 padding-left: 0;
@@ -199,10 +198,12 @@ p{
 				.nav-link{
 					text-decoration: none;
 					color: darkslategray;
+					padding-left:10px;
+					padding-right: 10px;
+					padding-top:10px;
 					.text-logo{
 						font-size: 9px;
 						font-weight: bold;
-						margin-bottom:0;
 					}
 					.img-logo{
 						display: flex;
@@ -210,6 +211,9 @@ p{
 						justify-content: center;
 						align-items: center;
 					}
+				}
+				.nav-link-active{
+					background-color: #FFCA38;
 				}
             }
         }
@@ -274,9 +278,6 @@ p{
 					}
 				}
 				.nav-link-active{
-					// cursor: pointer;
-					// border-width: 4px;
-					// box-shadow: rgb(255, 202, 56) 1px 1px 6px 1px;
 					background-color: #FFCA38;
 				}
 			}
