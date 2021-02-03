@@ -4,6 +4,9 @@ by Resthu Rizfarchan Adisurya
 
 I build this assignment using Create React App. 
 
+Open the deployed web:
+https://pokemonapp2021.netlify.app/
+
 How to run this program locally on your machine: 
 
 1. Clone the repository
