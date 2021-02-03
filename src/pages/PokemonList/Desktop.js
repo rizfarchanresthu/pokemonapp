@@ -8,7 +8,7 @@ import { titleCase, titleCaseDash } from '../../component/titleCase'
 
 const PokemonListDesktop = () => {
 
-	const [limit, setLimit] = useState(30);
+	const [limit, setLimit] = useState(24);
   const [offset, setOffset] = useState(0);
   const { myPokemon } = useContext(GlobalContext);
   
@@ -22,11 +22,11 @@ const PokemonListDesktop = () => {
   );
 
   const next = () => {
-    setOffset(prevOffset => prevOffset+9);
+    setOffset(prevOffset => prevOffset+24);
   }
 
   const prev = () => {
-    setOffset(prevOffset => prevOffset-9);
+    setOffset(prevOffset => prevOffset-24);
   }
 
   const pokemonList =  data.pokemons.results
