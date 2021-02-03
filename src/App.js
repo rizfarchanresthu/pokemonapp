@@ -1,6 +1,5 @@
 import './App.css';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client'
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 

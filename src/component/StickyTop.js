@@ -2,8 +2,6 @@ import React from 'react'
 import { NavLink, useHistory } from 'react-router-dom';
 
 const StickyTop = () => {
-    const history = useHistory()
-
     return (
       <div id="sticky-top">
         <nav>
