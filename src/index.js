@@ -7,7 +7,7 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,} from "@apollo/client";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 
 const client = new ApolloClient({
   uri: 'https://graphql-pokeapi.vercel.app/api/graphql',
