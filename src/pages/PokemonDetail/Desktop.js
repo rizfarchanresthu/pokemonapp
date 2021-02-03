@@ -1,20 +1,20 @@
 
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import usePokemonDetailHooks from '../../hooks/usePokemonDetailHooks'
 import './style.less' 
 import { GlobalContext } from '../../context/GlobalState'
 import { titleCase, titleCaseDash } from '../../component/titleCase'
 
-
-
 const PokemonDetailDesktop = (props) => {
-    console.log(props)
   let history = useHistory();
-  const { myPokemon, addPokemon, removePokemon, editPokemonName } = useContext(GlobalContext);
-  const [name, setName] = useState(props.location.state.name);
+  const { myPokemon, addPokemon, name, addName } = useContext(GlobalContext);
+  useEffect(()=> {
+    if(props.location.state) addName(props.location.state.name)
+  },[])
+  const [currName, setCurrName] = useState(props.location.state ? props.location.state.name : name);
   const [isCaught, setIsCaught] = useState("none")
-	const { loading, error, data } = usePokemonDetailHooks(name)
+  const { loading, error, data } = usePokemonDetailHooks(currName)
 	if (loading) return (
   <div className="img-loading">
     <img width="80" src="https://imgur.com/nJrgSrv.png" alt="https://imgur.com/nJrgSrv.png" />
@@ -33,8 +33,8 @@ const PokemonDetailDesktop = (props) => {
       types:pokemon.types,
       moves: pokemon.moves
     }
-    let math = Math.floor(Math.random()*10)
-    if(math%2 == 0){
+    let success = Math.random() > .5
+    if(success){
       setIsCaught("caught")
       addPokemon(pokemonCaught)
     }else {

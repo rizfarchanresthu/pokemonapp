@@ -8,7 +8,7 @@ import { titleCase, titleCaseDash } from '../../component/titleCase'
 
 const PokemonListMobile = () => {
 
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(9);
   const [offset, setOffset] = useState(0);
   const { myPokemon } = useContext(GlobalContext);
   
@@ -23,10 +23,13 @@ const PokemonListMobile = () => {
     </div>
   );
 
-  const loadMore = () => {
-    setLimit(prevLimit => prevLimit+10)
+  const next = () => {
+    setOffset(prevOffset => prevOffset+9);
   }
 
+  const prev = () => {
+    setOffset(prevOffset => prevOffset-9);
+  }
   const pokemonList =  data.pokemons.results
   
   const pokemons = pokemonList.map((pokemon, index) => {
@@ -51,9 +54,15 @@ const PokemonListMobile = () => {
       <div className="box-container-m" >
         {pokemons}
       </div>
-      <div className="title-card-m" style={{ marginTop: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => loadMore()}>
-        <p className="title" style={{fontSize:16}}>Load More</p>
+      <div className="btn-container-m">
+        {data.pokemons.previous ? <div className="title-card-m" style={{ margin: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => prev()}>
+          <p className="title" style={{fontSize:16}}>Prev Page</p>
+        </div> : null}
+        {data.pokemons.next ? <div className="title-card-m" style={{ margin: 10, width:'fit-content', borderWidth:2, padding: 5}} onClick={() => next()}>
+          <p className="title" style={{fontSize:16}}>Next Page</p>
+        </div> : null}
       </div>
+      
       <div style={{fontSize:8}}>Pokéball icon made from <a href="http://www.onlinewebfonts.com/icon">Icon Fonts</a> is licensed by CC BY 3.0</div>
       <div style={{fontSize:8,marginBottom: 70}}>Pokédex icon from <a href="https://www.visualpharm.com/free-icons/pokedex-595b40b65ba036ed117d221c">VisualPharm</a></div>
     </div>

@@ -1,5 +1,5 @@
 
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { GlobalContext } from '../../context/GlobalState';
 import { titleCase, titleCaseDash } from '../../component/titleCase'
@@ -7,13 +7,15 @@ import { titleCase, titleCaseDash } from '../../component/titleCase'
 
 const MyPokemonDetailDesktop = (props) => {
   let history = useHistory();
-  const { myPokemon, removePokemon, editPokemonName } = useContext(GlobalContext);
+  const { myPokemon, removePokemon, editPokemonName, myPokemonId, addMyPokemonId } = useContext(GlobalContext);
+  useEffect(()=> {
+    if(props.location.state) addMyPokemonId(props.location.state.id)
+  },[])
   const [isReleased, setIsReleased] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [nameEdit, setNameEdit] = useState("")
   
-  const pokemonDetail = myPokemon.filter(pokemon => pokemon.id == props.location.state.id);
-  
+  const pokemonDetail = myPokemon.filter(pokemon => pokemon.id == myPokemonId || props.location.state.id);  
 
   const releasePokemon = (id) => {
     setIsReleased(true)

@@ -7,13 +7,15 @@ import { titleCase, titleCaseDash } from '../../component/titleCase'
 
 const MyPokemonDetailMobile = (props) => {
   let history = useHistory();
-  const { myPokemon, removePokemon, editPokemonName } = useContext(GlobalContext);
+  const { myPokemon, removePokemon, editPokemonName, myPokemonId, addMyPokemonId } = useContext(GlobalContext);
+  useEffect(()=> {
+    if(props.location.state) addMyPokemonId(props.location.state.id)
+  },[])
   const [isReleased, setIsReleased] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [nameEdit, setNameEdit] = useState("")
   
-  // console.log(props.location.state.id, myPokemon.filter(pokemon => pokemon.id == props.location.state.id))
-  const pokemonDetail = myPokemon.filter(pokemon => pokemon.id == props.location.state.id);
+  const pokemonDetail = myPokemon.filter(pokemon => pokemon.id == myPokemonId || props.location.state.id);
   
 
   const releasePokemon = (id) => {

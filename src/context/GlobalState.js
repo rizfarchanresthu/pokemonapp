@@ -1,19 +1,16 @@
 import React, { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer'
 import useLocalStorage from '../hooks/useLocalStorageHooks'
-// const initialState = {
-//     myPokemon: [
-//         // { id: 1, name: 'Ishan Manandhar', location: 'Kathmandu', designation: 'Frontend Dev' }
-//     ]
-//     myPokemon: myPokemon
-// }
 
 export const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
     const [myPokemon, setMyPokemon] = useLocalStorage("myPokemon", []);
-    
+    const [name, setName] = useLocalStorage("currPokemonName", []);
+    const [myPokemonId, setMyPokemonId] = useLocalStorage("myPokemonId", []);
     const initialState = {
-        myPokemon: myPokemon
+        myPokemon: myPokemon,
+        name: name,
+        myPokemonId: myPokemonId
     }
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
@@ -35,6 +32,22 @@ export const GlobalProvider = ({ children }) => {
         setMyPokemon([...state.myPokemon, pokemon])
     };
 
+    function addName(name) {
+        dispatch({
+            type: 'ADD_CURR_POKEMON',
+            payload: name
+        });
+        setName(name)
+    };
+
+    function addMyPokemonId(id) {
+        dispatch({
+            type: 'ADD_CURR_MY_POKEMON',
+            payload: id
+        });
+        setMyPokemonId(id)
+    };
+
     function editPokemonName(pokemon) {
         
         dispatch({
@@ -54,9 +67,13 @@ export const GlobalProvider = ({ children }) => {
 
     return (<GlobalContext.Provider value={{
         myPokemon: state.myPokemon,
+        name: state.name,
+        myPokemonId: state.myPokemonId,
         removePokemon,
         addPokemon,
-        editPokemonName
+        editPokemonName,
+        addName,
+        addMyPokemonId
     }}>
         {children}
     </GlobalContext.Provider>);
